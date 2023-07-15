@@ -21,7 +21,7 @@ const Footer = () => {
             />
           </div>
         </div>
-        <div className="flex flex-col gap-y-3 pb-4">
+        <div className="flex flex-col gap-y-3 pb-4 text-black">
           <p className="text-sm">© 2023 SpaceX. All rights reserved.</p>
           <p className="text-sm">
             This website is a test project and is not affiliated with or
