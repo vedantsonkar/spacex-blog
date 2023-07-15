@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import Menu from "./Menu";
 
 const Header = () => {
   return (
@@ -15,10 +16,20 @@ const Header = () => {
           <p className="dark:invert">SpaceX</p>
         </Link>
       </div>
-      <div className="flex items-center justify-end mr-8 md:mr-16 dark:invert">
-        <Link href="/about" className="hover:underline">
-          <p>About</p>
-        </Link>
+      <div className="mr-8 md:mr-16 dark:invert">
+        <nav className="flex items-center justify-end gap-x-6 max-md:hidden">
+          <Link href="/about" className="hover:underline">
+            <p>About</p>
+          </Link>
+          <a
+            href="https://www.spacex.com/"
+            target="_blank"
+            className="hover:underline"
+          >
+            SpaceX
+          </a>
+        </nav>
+        <Menu />
       </div>
     </header>
   );

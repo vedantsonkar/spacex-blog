@@ -96,7 +96,7 @@ const SearchComponent: React.FC<SearchComponentProps> = () => {
           </option>
         </select>
       </div>
-      <div className="p-2 dark:invert">
+      <div className="p-2">
         <PrimaryButton
           label="Search"
           onClick={handleSearch}

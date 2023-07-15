@@ -41,11 +41,11 @@ export default async function Home() {
         />
       </div>
 
-      <div className="w-full">
+      <div className="w-full bg-gradient-to-br bg-gradient-radial">
         <SearchComponent />
       </div>
 
-      <div className="mb-8 max-md:mt-8 grid text-center sm:grid-cols-2 md:mb-0 md:grid-cols-3 lg:grid-cols-4 md:text-left p-24">
+      <div className="mb-8 max-md:mt-4 grid text-center sm:grid-cols-2 md:mb-0 md:grid-cols-3 lg:grid-cols-4 md:text-left lg:p-24">
         {remainingPosts.map((post) => (
           <Link
             as={`/rockets/${post.id}`}

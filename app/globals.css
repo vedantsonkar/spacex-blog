@@ -25,3 +25,7 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.bg-gradient-radial {
+  background-image: var(--gradient-radial);
+}
