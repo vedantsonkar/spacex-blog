@@ -1,13 +1,10 @@
-import Image from "next/image";
 import ImageSlider from "./ImageSlider";
 
 type Props = {
-  title: string;
-  images: string[];
-  slug?: string;
+  images?: string[];
 };
 
-const CoverImage = ({ title, images, slug }: Props) => {
+const CoverImage = ({ images }: Props) => {
   return (
     <ImageSlider
       imageUrls={images}

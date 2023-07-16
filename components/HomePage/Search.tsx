@@ -1,11 +1,18 @@
 "use client";
-import { useState, ChangeEvent, MouseEvent } from "react";
+import { useState, ChangeEvent, MouseEvent, useEffect } from "react";
 import PrimaryButton from "../PrimaryButton";
 import SecondaryButton from "../SecondaryButton";
+import { useRocketContext } from "@/context/rocketsContext";
+import { RocketProps } from "@/interface/RocketProps";
 
-interface SearchComponentProps {}
+interface SearchComponentProps {
+  setFilteredRockets: React.Dispatch<React.SetStateAction<RocketProps[]>>;
+}
 
-const SearchComponent: React.FC<SearchComponentProps> = () => {
+const SearchComponent: React.FC<SearchComponentProps> = ({
+  setFilteredRockets,
+}) => {
+  const { rockets } = useRocketContext();
   const [search, setSearch] = useState<string>("");
   const [type, setType] = useState<string>("");
   const [status, setStatus] = useState<string>("");
@@ -39,10 +46,28 @@ const SearchComponent: React.FC<SearchComponentProps> = () => {
     setCountry("");
   };
 
-  const handleSearch = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    // Perform search logic
+  const handleSearch = () => {
+    const filteredResults = rockets.filter((rocket) => {
+      const nameMatch = rocket.name
+        .toLowerCase()
+        .includes(search.toLowerCase());
+      const typeMatch = type ? rocket.type === type : true;
+      const statusMatch = status ? rocket.active.toString() === status : true;
+      const countryMatch = country ? rocket.country === country : true;
+
+      return nameMatch && typeMatch && statusMatch && countryMatch;
+    });
+
+    const sortedResults = filteredResults.sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+
+    setFilteredRockets(sortedResults);
   };
+
+  useEffect(() => {
+    handleSearch();
+  }, [rockets]);
 
   const isSearchDisabled: boolean = !search && !type && !status && !country;
   const isResetDisabled: boolean = isSearchDisabled;
@@ -66,7 +91,9 @@ const SearchComponent: React.FC<SearchComponentProps> = () => {
         >
           <option value="">Select Type</option>
           <option value="rocket">Rocket</option>
-          <option value="capsules">Capsules</option>
+          <option value="capsules" hidden={country !== ""}>
+            Capsules
+          </option>
         </select>
       </div>
       <div className="p-1">
@@ -76,10 +103,8 @@ const SearchComponent: React.FC<SearchComponentProps> = () => {
           className="rounded-xl border-black p-2 bg-white border text-black"
         >
           <option value="">Select Status</option>
-          <option value="active">Active</option>
-          <option value="retired">Retired</option>
-          <option value="unknown">Unknown</option>
-          <option value="inactive">Inactive</option>
+          <option value="true">Active</option>
+          <option value="false">Inactive</option>
         </select>
       </div>
       <div className="p-1">

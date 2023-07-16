@@ -1,17 +1,48 @@
+"use client";
+import ImageListComponent from "@/components/Rockets/ImageList";
+import RocketDetails from "@/components/Rockets/RocketDetails";
+import { useRocketContext } from "@/context/rocketsContext";
+import { RocketProps } from "@/interface/RocketProps";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { use, useEffect, useState } from "react";
+
 export default function Rocket() {
+  const pathname = usePathname();
+  const { rockets, loading } = useRocketContext();
+  const [rocket, setRocket] = useState<any>({});
+  function extractRocketIdFromUrl(url: string): string {
+    return url.replace("/rockets/", "");
+  }
+
+  function findRocketById(
+    id: string,
+    rockets: RocketProps[]
+  ): RocketProps | undefined {
+    return rockets.find((rocket) => rocket.id === id);
+  }
+
+  const handleSearch = () => {
+    const rocketId = extractRocketIdFromUrl(pathname);
+    setRocket(findRocketById(rocketId, rockets));
+  };
+
+  useEffect(() => {
+    handleSearch();
+  }, [pathname, rockets]);
+
+  if (!rocket && !loading) {
+    return <h1>I think this rocket has already taken off our database</h1>;
+  }
+
   return (
-    <div
-      className="flex flex-col items-center justify-center min-h
-        screen-75"
-    >
-      <h1 className="text-6xl font-bold">About :</h1>
-      <h2 className="text-4xl mt-4">This is a SpaceX Blog Page</h2>
-      <p className="text-xl mt-4">
-        This app is built with React.js, Next.js and Tailwind CSS by Vedant
-        Sonkar
-      </p>
-      <p className="text-xl mt-4">The data is fetched from the SpaceX API</p>
-      <p className="text-xl mt-4">The app is deployed on Vercel</p>
+    <div className="flex flex-wrap items-start py-4 justify-cetner gap-x-16 w-full px-8">
+      <div className="w-[40vw] max-lg:w-full">
+        <ImageListComponent imageUrls={rocket?.flickr_images} />
+      </div>
+      <div>
+        <RocketDetails rocket={rocket} />
+      </div>
     </div>
   );
 }

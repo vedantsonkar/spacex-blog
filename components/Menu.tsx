@@ -26,7 +26,7 @@ const Menu = () => {
         />
       </button>
       {isMenuOpen && (
-        <div className="absolute top-10 right-0 bg-white dark:invert shadow-md rounded-md p-4">
+        <div className="absolute top-10 right-0 bg-white dark:invert shadow-md rounded-md p-4 md:hidden">
           <ul>
             <li>
               <Link href="/about" className="hover:underline text-black">
@@ -38,9 +38,9 @@ const Menu = () => {
               <a
                 href="https://www.spacex.com/"
                 target="_blank"
-                className="hover:underline text-black"
+                className="hover:underline text-black text-md"
               >
-                SpaceX
+                SpaceX Official Website
               </a>
             </li>
           </ul>

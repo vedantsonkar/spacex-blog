@@ -1,72 +1,80 @@
-import CoverImage from "@/components/HomePage/CoverImage";
-import Image from "next/image";
-import type { GetServerSideProps } from "next";
+"use client";
 import SearchComponent from "@/components/HomePage/Search";
 import HeroBanner from "@/components/HomePage/Banner";
-import { Suspense } from "react";
 import { RocketProps } from "@/interface/RocketProps";
 import Link from "next/link";
 import ImageSlider from "@/components/HomePage/ImageSlider";
+import { useRocketContext } from "@/context/rocketsContext";
+import { useState } from "react";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
-async function getData() {
-  const res = await fetch(`${process.env.PHP_BASE_URL}/rockets.php`);
-  const apiData = await res.json();
-  return apiData.data;
-}
+export default function Home() {
+  const { rockets, loading } = useRocketContext();
+  const [filteredRockets, setFilteredRockets] =
+    useState<RocketProps[]>(rockets);
 
-export default async function Home() {
-  const getRandomIndex = (array: RocketProps[]) => {
-    const randomIndex = Math.floor(Math.random() * array.length);
-    return randomIndex;
-  };
-
-  const data: RocketProps[] = await getData();
-  console.log("data", data);
-  const heroPost = data[getRandomIndex(data)];
-  const dimensions = {
-    height: heroPost.height,
-    diameter: heroPost.diameter,
-    mass: heroPost.mass,
-  };
-  const remainingPosts = data.filter((post) => post.id !== heroPost.id);
+  console.log(filteredRockets);
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
-      <div className="w-full h-[50rem] md:relative md:w-[90%] md:my-10 md:hover:scale-105 transition-transform duration-200 delay-200 md:shadow-xl hover:md:shadow-2xl shadow-black dark:shadow-white md:rounded-xl">
-        <HeroBanner
-          title={heroPost.name}
-          description={heroPost.description}
-          image_urls={heroPost.flickr_images}
-          slug={heroPost.id}
-          dimensions={dimensions}
-        />
+      <div className="w-full h-[50rem] md:relative md:w-[90%] md:my-10 md:hover:scale-105 transition-transform duration-200 delay-200 md:shadow-xl hover:md:shadow-2xl">
+        {rockets.length < 1 ? (
+          <SkeletonTheme baseColor="#202020" highlightColor="#444">
+            <Skeleton style={{ width: "100%", height: "100%" }} />
+          </SkeletonTheme>
+        ) : (
+          <HeroBanner />
+        )}
       </div>
 
-      <div className="w-full bg-gradient-to-br bg-gradient-radial">
-        <SearchComponent />
-      </div>
+      {!loading && (
+        <div className="w-full bg-gradient-radial">
+          <SearchComponent setFilteredRockets={setFilteredRockets} />
+        </div>
+      )}
 
       <div className="mb-8 max-md:mt-4 grid text-center sm:grid-cols-2 md:mb-0 md:grid-cols-3 lg:grid-cols-4 md:text-left lg:p-24">
-        {remainingPosts.map((post) => (
-          <Link
-            as={`/rockets/${post.id}`}
-            href="/posts/[slug]"
-            className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-            key={post.id}
-          >
-            <div className="relative h-32 w-full">
-              <ImageSlider imageUrls={post.flickr_images} />
-            </div>
-            <h2 className={`mb-3 text-2xl font-semibold`}>
-              {post.name}
-              <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-                -&gt;
-              </span>
-            </h2>
-            <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-              {post.description}
-            </p>
-          </Link>
-        ))}
+        {filteredRockets.length < 1 && !loading ? (
+          <h1 className="text-4xl self-center justify-self-center">
+            Nothing to show here ...
+          </h1>
+        ) : (
+          filteredRockets.map((rocket) => (
+            <Link
+              as={`/rockets/${rocket.id}`}
+              href="/rockets/[slug]"
+              className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+              key={rocket.id}
+            >
+              <div className="relative h-32 w-full">
+                {loading ? (
+                  <SkeletonTheme baseColor="#202020" highlightColor="#444">
+                    <Skeleton style={{ width: "100%", height: "100%" }} />
+                  </SkeletonTheme>
+                ) : (
+                  <ImageSlider imageUrls={rocket.flickr_images} />
+                )}
+              </div>
+              <h2 className={`mb-3 text-2xl font-semibold`}>
+                {rocket.name ?? (
+                  <SkeletonTheme baseColor="#202020" highlightColor="#444">
+                    <Skeleton style={{ width: "100%", height: "100%" }} />
+                  </SkeletonTheme>
+                )}
+                <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
+                  -&gt;
+                </span>
+              </h2>
+              <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
+                {rocket.description ?? (
+                  <SkeletonTheme baseColor="#202020" highlightColor="#444">
+                    <Skeleton count={3} />
+                  </SkeletonTheme>
+                )}
+              </p>
+            </Link>
+          ))
+        )}
       </div>
     </main>
   );
