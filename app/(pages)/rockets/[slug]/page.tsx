@@ -3,9 +3,8 @@ import ImageListComponent from "@/components/Rockets/ImageList";
 import RocketDetails from "@/components/Rockets/RocketDetails";
 import { useRocketContext } from "@/context/rocketsContext";
 import { RocketProps } from "@/interface/RocketProps";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Rocket() {
   const pathname = usePathname();
