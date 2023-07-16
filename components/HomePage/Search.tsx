@@ -44,6 +44,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
     setType("");
     setStatus("");
     setCountry("");
+    setFilteredRockets(rockets);
   };
 
   const handleSearch = () => {

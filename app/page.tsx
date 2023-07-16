@@ -13,8 +13,6 @@ export default function Home() {
   const { rockets, loading } = useRocketContext();
   const [filteredRockets, setFilteredRockets] =
     useState<RocketProps[]>(rockets);
-
-  console.log(filteredRockets);
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
       <div className="w-full h-[50rem] md:relative md:w-[90%] md:my-10 md:hover:scale-105 transition-transform duration-200 delay-200 md:shadow-xl hover:md:shadow-2xl">
