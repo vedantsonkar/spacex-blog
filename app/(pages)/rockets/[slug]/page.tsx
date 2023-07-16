@@ -31,7 +31,13 @@ export default function Rocket() {
   }, [pathname, rockets]);
 
   if (!rocket && !loading) {
-    return <h1>I think this rocket has already taken off our database</h1>;
+    return (
+      <div className="mx-auto p-8 flex justify-center items-center">
+        <h1 className="text-black md:text-4xl text-xl font-bold dark:invert">
+          I think this rocket has already taken off our database...🚀
+        </h1>
+      </div>
+    );
   }
 
   return (
