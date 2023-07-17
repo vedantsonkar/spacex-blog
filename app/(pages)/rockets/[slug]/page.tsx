@@ -41,11 +41,11 @@ export default function Rocket() {
   }
 
   return (
-    <div className="flex flex-wrap items-start py-4 justify-cetner gap-x-16 w-full px-8">
-      <div className="w-[40vw] max-lg:w-full">
+    <div className="flex flex-wrap items-start py-4 justify-cetner w-full px-8 gap-x-6">
+      <div className="side-images max-lg:w-full">
         <ImageListComponent imageUrls={rocket?.flickr_images} />
       </div>
-      <div>
+      <div className="max-md:side-images">
         <RocketDetails rocket={rocket} />
       </div>
     </div>

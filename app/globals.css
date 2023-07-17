@@ -29,3 +29,7 @@ body {
 .bg-gradient-radial {
   background-image: var(--gradient-radial);
 }
+
+.side-images {
+  width: calc(50% - 0.25rem);
+}
