@@ -71,6 +71,10 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
     setFilteredRockets(sortedResults);
   };
 
+  useEffect(() => {
+    handleSearch();
+  });
+
   const isSearchDisabled: boolean = !search && !type && !status && !country;
   const isResetDisabled: boolean = isSearchDisabled;
 
