@@ -21,13 +21,9 @@ export default function Rocket() {
     return rockets.find((rocket) => rocket.id === id);
   }
 
-  const handleSearch = () => {
+  useEffect(() => {
     const rocketId = extractRocketIdFromUrl(pathname);
     setRocket(findRocketById(rocketId, rockets));
-  };
-
-  useEffect(() => {
-    handleSearch();
   }, [pathname, rockets]);
 
   if (!rocket && !loading) {

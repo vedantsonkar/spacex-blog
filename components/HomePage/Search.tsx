@@ -39,6 +39,11 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
     setCountry(e.target.value);
   };
 
+  const handleFormSubmit = (e: MouseEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleSearch();
+  };
+
   const handleReset = () => {
     setSearch("");
     setType("");
@@ -66,75 +71,74 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
     setFilteredRockets(sortedResults);
   };
 
-  useEffect(() => {
-    handleSearch();
-  }, [rockets]);
-
   const isSearchDisabled: boolean = !search && !type && !status && !country;
   const isResetDisabled: boolean = isSearchDisabled;
 
   return (
-    <div className="flex flex-wrap border-y py-4 w-full items-center justify-center gap-y-2 gap-x-4 border-neutral-200 dark:invert">
-      <div className="p-1">
-        <input
-          type="text"
-          placeholder="Search"
-          value={search}
-          onChange={handleSearchChange}
-          className="rounded-xl p-2 bg-white placeholder-black border border-black text-black"
-        />
+    <form onSubmit={handleFormSubmit}>
+      <div className="flex flex-wrap border-y py-4 w-full items-center justify-center gap-y-2 gap-x-4 border-neutral-200 dark:invert">
+        <div className="p-1">
+          <input
+            type="text"
+            placeholder="Search"
+            value={search}
+            onChange={handleSearchChange}
+            className="rounded-xl p-2 bg-white placeholder-black border border-black text-black"
+          />
+        </div>
+        <div className="p-1">
+          <select
+            value={type}
+            onChange={handleTypeChange}
+            className="rounded-xl border-black p-2 bg-white border text-black"
+          >
+            <option value="">Select Type</option>
+            <option value="rocket">Rocket</option>
+            <option value="capsules" hidden={country !== ""}>
+              Capsules
+            </option>
+          </select>
+        </div>
+        <div className="p-1">
+          <select
+            value={status}
+            onChange={handleStatusChange}
+            className="rounded-xl border-black p-2 bg-white border text-black"
+          >
+            <option value="">Select Status</option>
+            <option value="true">Active</option>
+            <option value="false">Inactive</option>
+          </select>
+        </div>
+        <div className="p-1">
+          <select
+            value={country}
+            onChange={handleCountryChange}
+            disabled={isCapsulesSelected}
+            className="rounded-xl border-black p-2 bg-white border text-black"
+          >
+            <option value="">Select Country</option>
+            <option value="United States">United States</option>
+            <option value="Republic of the Marshall Islands">
+              Republic of the Marshall Islands
+            </option>
+          </select>
+        </div>
+        <div className="p-2">
+          <PrimaryButton
+            type="submit"
+            label="Search"
+            disabled={isSearchDisabled}
+          />
+          <SecondaryButton
+            type="reset"
+            label="Reset"
+            onClick={handleReset}
+            disabled={isResetDisabled}
+          />
+        </div>
       </div>
-      <div className="p-1">
-        <select
-          value={type}
-          onChange={handleTypeChange}
-          className="rounded-xl border-black p-2 bg-white border text-black"
-        >
-          <option value="">Select Type</option>
-          <option value="rocket">Rocket</option>
-          <option value="capsules" hidden={country !== ""}>
-            Capsules
-          </option>
-        </select>
-      </div>
-      <div className="p-1">
-        <select
-          value={status}
-          onChange={handleStatusChange}
-          className="rounded-xl border-black p-2 bg-white border text-black"
-        >
-          <option value="">Select Status</option>
-          <option value="true">Active</option>
-          <option value="false">Inactive</option>
-        </select>
-      </div>
-      <div className="p-1">
-        <select
-          value={country}
-          onChange={handleCountryChange}
-          disabled={isCapsulesSelected}
-          className="rounded-xl border-black p-2 bg-white border text-black"
-        >
-          <option value="">Select Country</option>
-          <option value="United States">United States</option>
-          <option value="Republic of the Marshall Islands">
-            Republic of the Marshall Islands
-          </option>
-        </select>
-      </div>
-      <div className="p-2">
-        <PrimaryButton
-          label="Search"
-          onClick={handleSearch}
-          disabled={isSearchDisabled}
-        />
-        <SecondaryButton
-          label="Reset"
-          onClick={handleReset}
-          disabled={isResetDisabled}
-        />
-      </div>
-    </div>
+    </form>
   );
 };
 

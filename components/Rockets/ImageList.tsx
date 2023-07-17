@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { useEffect } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 interface ImageListComponentProps {
@@ -20,17 +19,10 @@ const ImageListComponent: React.FC<ImageListComponentProps> = ({
     );
   const [firstImageUrl, ...restImageUrls] = imageUrls;
 
-  function getWidth() {
-    if (typeof window !== "undefined") {
-      return window.innerWidth;
-    }
-    return 0;
-  }
-
   return (
     <div>
       {firstImageUrl && (
-        <div className="relative h-[25rem] w-full mb-4">
+        <div className="relative md:h-[45rem] h-[25rem] w-full mb-4">
           <Image src={firstImageUrl} alt="image" fill priority sizes="100vw" />
         </div>
       )}

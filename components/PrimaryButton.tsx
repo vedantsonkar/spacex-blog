@@ -5,6 +5,7 @@ interface ButtonProps {
   onClick?: MouseEventHandler<HTMLElement>;
   link?: string;
   disabled?: boolean;
+  type?: "button" | "submit" | "reset";
 }
 
 export default function PrimaryButton({
@@ -12,6 +13,7 @@ export default function PrimaryButton({
   link,
   onClick,
   disabled = false,
+  type = "button",
 }: ButtonProps) {
   const buttonClassname = disabled
     ? "bg-opacity-50 cursor-not-allowed mx-3 bg-grey border border-black text-black font-bold py-3 px-12 lg:px-8 duration-200 transition-colors mb-6 lg:mb-0"
@@ -30,9 +32,9 @@ export default function PrimaryButton({
   return (
     <button
       className={buttonClassname}
-      type="button"
       onClick={onClick}
       disabled={disabled}
+      type={type}
     >
       {label}
     </button>
