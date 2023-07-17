@@ -25,14 +25,57 @@ export default function Home() {
         )}
       </div>
 
-      {!loading && (
-        <div className="w-full bg-gradient-radial">
-          <SearchComponent setFilteredRockets={setFilteredRockets} />
-        </div>
-      )}
+      <div className="w-full bg-gradient-radial">
+        <SearchComponent setFilteredRockets={setFilteredRockets} />
+      </div>
 
       <div className="mb-8 max-md:mt-4 grid text-center sm:grid-cols-2 md:mb-0 md:grid-cols-3 lg:grid-cols-4 md:text-left lg:p-24">
-        {filteredRockets.length < 1 && !loading ? (
+        {rockets.length < 1 ? (
+          <>
+            <div className="rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30">
+              <div className="relative h-32 w-full">
+                <SkeletonTheme baseColor="#202020" highlightColor="#444">
+                  <Skeleton
+                    style={{
+                      width: "16rem",
+                      height: "9rem",
+                      borderRadius: "2rem",
+                    }}
+                    key={0}
+                  />
+                </SkeletonTheme>
+              </div>
+            </div>
+            <div className="rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30">
+              <div className="relative h-32 w-full">
+                <SkeletonTheme baseColor="#202020" highlightColor="#444">
+                  <Skeleton
+                    style={{
+                      width: "16rem",
+                      height: "9rem",
+                      borderRadius: "2rem",
+                    }}
+                    key={1}
+                  />
+                </SkeletonTheme>
+              </div>
+            </div>
+            <div className="rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30">
+              <div className="relative h-32 w-full">
+                <SkeletonTheme baseColor="#202020" highlightColor="#444">
+                  <Skeleton
+                    style={{
+                      width: "16rem",
+                      height: "9rem",
+                      borderRadius: "2rem",
+                    }}
+                    key={2}
+                  />
+                </SkeletonTheme>
+              </div>
+            </div>
+          </>
+        ) : filteredRockets.length < 1 && !loading ? (
           <h1 className="text-4xl self-center justify-self-center">
             Nothing to show here ...
           </h1>
@@ -45,30 +88,16 @@ export default function Home() {
               key={rocket.id}
             >
               <div className="relative h-32 w-full">
-                {loading ? (
-                  <SkeletonTheme baseColor="#202020" highlightColor="#444">
-                    <Skeleton style={{ width: "100%", height: "100%" }} />
-                  </SkeletonTheme>
-                ) : (
-                  <ImageSlider imageUrls={rocket.flickr_images} />
-                )}
+                <ImageSlider imageUrls={rocket.flickr_images} />
               </div>
               <h2 className={`mb-3 text-2xl font-semibold`}>
-                {rocket.name ?? (
-                  <SkeletonTheme baseColor="#202020" highlightColor="#444">
-                    <Skeleton style={{ width: "100%", height: "100%" }} />
-                  </SkeletonTheme>
-                )}
+                {rocket.name}
                 <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
                   -&gt;
                 </span>
               </h2>
               <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-                {rocket.description ?? (
-                  <SkeletonTheme baseColor="#202020" highlightColor="#444">
-                    <Skeleton count={3} />
-                  </SkeletonTheme>
-                )}
+                {rocket.description}
               </p>
             </Link>
           ))

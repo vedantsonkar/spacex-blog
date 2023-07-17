@@ -7,10 +7,11 @@ interface RocketDetailsProps {
 const RocketDetails: React.FC<RocketDetailsProps> = ({ rocket }) => {
   return (
     <div className="justify-center">
-      <h1 className="text-4xl font-bold">
+      <h1 className="text-4xl font-bold mb-4">
         {rocket ? rocket.name : <SmallSkeleton />}
       </h1>
-      <div className="flex flex-col gap-y-8 md:flex-wrap md:flex-row md:gap-x-8">
+
+      <div className="flex gap-y-4 mb-4 gap-x-2 flex-wrap flex-row md:gap-x-8">
         <div>
           <h2 className="text-2xl font-semibold">Height</h2>
           <p className="text-base font-medium">
@@ -40,7 +41,7 @@ const RocketDetails: React.FC<RocketDetailsProps> = ({ rocket }) => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-y-8 md:flex-wrap md:flex-row md:gap-x-8">
+      <div className="flex flex-col gap-y-4 mb-4 md:flex-wrap md:flex-row md:gap-x-8">
         <div>
           <h2 className="text-2xl font-semibold">First Stage</h2>
           <p className="text-base font-medium">
@@ -141,7 +142,7 @@ const RocketDetails: React.FC<RocketDetailsProps> = ({ rocket }) => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-y-8 md:flex-wrap md:flex-row md:gap-x-8">
+      <div className="flex flex-col gap-y-4 mb-4 md:flex-wrap md:flex-row md:gap-x-8">
         <div>
           <h2 className="text-2xl font-semibold">Engines</h2>
           <p className="text-base font-medium">
