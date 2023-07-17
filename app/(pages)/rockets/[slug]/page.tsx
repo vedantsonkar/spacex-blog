@@ -42,7 +42,7 @@ export default function Rocket() {
 
   return (
     <div className="flex flex-wrap items-start py-4 justify-cetner w-full px-8 gap-x-6">
-      <div className="side-images max-lg:w-full">
+      <div className="side-images max-[1063px]:w-full">
         <ImageListComponent imageUrls={rocket?.flickr_images} />
       </div>
       <div className="max-md:side-images">
