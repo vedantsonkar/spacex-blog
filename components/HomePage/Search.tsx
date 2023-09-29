@@ -94,7 +94,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
           <select
             value={type}
             onChange={handleTypeChange}
-            className="rounded-xl border-black pr-2 bg-white border text-black"
+            className="rounded-xl border-black p-2 bg-white border text-black"
           >
             <option value="">Select Type</option>
             <option value="rocket">Rocket</option>
