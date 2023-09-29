@@ -1,3 +1,4 @@
+import Link from "next/link";
 import PrimaryButton from "./PrimaryButton";
 import Container from "./container";
 
@@ -30,7 +31,14 @@ const Footer = () => {
           </p>
           <p className="text-sm">
             For official and up-to-date information, please visit the SpaceX
-            website at www.spacex.com.
+            website at{" "}
+            <Link
+              href="https://www.spacex.com"
+              className="text-sm hover:underline"
+              target="_blank"
+            >
+              www.spacex.com
+            </Link>
           </p>
         </div>
       </Container>

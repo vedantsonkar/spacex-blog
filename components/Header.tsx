@@ -1,6 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import Menu from "./Menu";
+import localFont from "next/font/local";
+
+const BankGothicRegular = localFont({
+  src: "../public/fonts/BankGothicRegular.ttf",
+});
 
 const Header = () => {
   return (
@@ -13,21 +18,23 @@ const Header = () => {
           <div className="relative h-16 w-16 md:h-32 md:w-32">
             <Image src="/spacex-logo.svg" alt="SpaceX" fill />
           </div>
-          <p className="dark:invert">SpaceX</p>
+          <p className={`${BankGothicRegular.className} dark:invert`}>
+            Space X
+          </p>
         </Link>
       </div>
       <div className="mr-8 md:mr-16 dark:invert">
         <nav className="flex items-center justify-end gap-x-6 max-md:hidden">
           <Link href="/about" className="hover:underline">
-            <p>About</p>
+            <p className={`${BankGothicRegular.className}`}>About</p>
           </Link>
-          <a
+          <Link
             href="https://www.spacex.com/"
             target="_blank"
-            className="hover:underline"
+            className={`${BankGothicRegular.className} hover:underline`}
           >
-            SpaceX
-          </a>
+            Space X
+          </Link>
         </nav>
         <Menu />
       </div>
